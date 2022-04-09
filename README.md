@@ -73,7 +73,7 @@ $ ? What do you want to do with your habits? (Use arrow keys)
 ```
 
 
-### Creating a new habit :seedling:
+### Creating a new habit  :seedling:
 
 To create a new habit, select "Create", then follow the instructions on the screen to 
 give your habit a name, a regularity, and a description.
@@ -100,7 +100,7 @@ New daily habit
 Thanks for the info. Your habit has been saved!
 ```
 
-### Viewing a list of your habits :eyes:
+### Viewing a list of your habits  :eyes:
 Habitoro comes with some predefined habits to help you understand how to use the app. To show a list of 
 all your daily habits:
 ```
@@ -135,7 +135,7 @@ meditate (1): 5 minutes of mindful breathing
 not smoke cigarette (1): quit smoking!
 -----------------------------------------------
 ```
-### Assessing your best habits :nail_care:
+### Assessing your best habits  :nail_care:
 Habito can also help you monitor which habits you are most successful at. To determine your habit with the 
 longest streak:
 ```
