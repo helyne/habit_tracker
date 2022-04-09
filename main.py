@@ -10,17 +10,17 @@ def cli():
     # initialize database
     db = get_db()
 
-    print("Hai. Welcome to the habit tracker.")
+    print("Hai. Welcome to Habitoro.")
 
     # get username and save
-    user_name = questionary.text("What's your name?").ask()
+    user_name = questionary.text("What's your name?\n").ask()
     user = User(db, user_name)
     user.identify()
     user.save()
-    print(f"Welcome {user.name}.")
+    print(f"Welcome, {user.name}.")
 
     # optionally print user habits
-    confirm_showlist = questionary.confirm("Would you like to see your habits?").ask()
+    confirm_showlist = questionary.confirm("Would you like to see your habits?\n").ask()
     if confirm_showlist:
         print(f"\nHere are all your current habits, {user.name}\n")
         print_habits(db_get_user_habits(db, user.id))
@@ -28,7 +28,7 @@ def cli():
     else:
         print("Ok. Then let's track some habits.")
 
-    confirm_start = questionary.confirm("Are you ready to track some habits?").ask()
+    confirm_start = questionary.confirm("Are you ready to track some habits?\n").ask()
 
     if confirm_start:
         go = True
@@ -36,7 +36,7 @@ def cli():
 
             choice = questionary.select(
                 "What do you want to do with your habits?",
-                choices=["Create", "Log", "Analyse", "List", "Modify", "Delete", "Exit"]
+                choices=["Create", "Log", "Analyze", "List", "Modify", "Delete", "Exit"]
             ).ask()
 
             habits_data = db_get_user_habits(db, user.id)
@@ -44,21 +44,21 @@ def cli():
             if choice == "Create":
                 try_again = True
                 while try_again:
-                    name = questionary.text("What's the name of your habit?",
+                    name = questionary.text("What's the name of your habit?\n",
                                             validate=lambda text: True if len(text) > 0 else "Please enter a value"
                                             ).ask() # validate response is not null
                     reg = questionary.text("How often do you want to do this habit (in days)?"
-                                           "\ne.g. daily = 1, weekly = 7, monthly = 30",
+                                           " e.g. daily = 1, weekly = 7, monthly = 30\n",
 										   validate=lambda text: True if len( # validate response is an integer
 											   text) > 0 and text.isnumeric() else "Please enter a value"
 										   ).ask()
-                    desc = questionary.text("What's the description of your habit? (optional)").ask()
+                    desc = questionary.text("What's the description of your habit? (optional)\n").ask()
                     habit = Habit(db=db, user_id=user.id, habit_name=name,
                                   regularity=int(reg), description=desc)
                     habit.identify()
                     if habit.id is None:
                         habit.save()
-                        print("Your habit has been saved! \nNow...")
+                        print("Thanks for the info. Your habit has been saved! \nNow...")
                         try_again = False
                     else:
                         print("Oops. You already have that habit saved.")
@@ -68,7 +68,7 @@ def cli():
                 while try_again:
                     print("\nHere are all your current habits\n")
                     print_habits(habits_data)
-                    name = questionary.text("Which habit do you want to log?").ask()
+                    name = questionary.text("Which habit do you want to log?\n").ask()
                     habit = Habit(db, user.id, name)
                     habit.identify()
                     if habit.id is None:
@@ -83,7 +83,7 @@ def cli():
                 while try_again:
                     print("\nHere are all your current habits\n")
                     print_habits(habits_data)
-                    name = questionary.text("Which habit do you want to modify?").ask()
+                    name = questionary.text("Which habit do you want to modify?\n").ask()
                     habit = Habit(db, user.id, name)
                     habit.identify()
                     if habit.id is None:
@@ -96,24 +96,24 @@ def cli():
                         if choice == "Name":
                             try_again2 = True
                             while try_again2:
-                                new_name = questionary.text("What do you want to change the name to?",
+                                new_name = questionary.text("What do you want to change the name to?\n",
                                                             validate=lambda text: True if len(
                                                                 text) > 0 else "Please enter a value").ask()
                                 habit_new = Habit(db, user.id, new_name)
                                 habit_new.identify()
                                 if habit_new.id is not None:
-                                    print("You already have a habit with the same name.")
+                                    print("You already have a habit with the same name.\n")
                                 else:
                                     habit.name = habit_new.name
                                     try_again2 = False
                         elif choice == "Regularity":
-                            new_reg = questionary.text("What do you want to change the regularity to?",
+                            new_reg = questionary.text("What do you want to change the regularity to?\n",
 													   validate=lambda text: True if len(
 														   text) > 0 and text.isnumeric() else "Please enter a value"
 													   ).ask()
                             habit.regularity = int(new_reg)
                         else:
-                            new_desc = questionary.text("What do you want to change the description to?").ask()
+                            new_desc = questionary.text("What do you want to change the description to?\n").ask()
                             habit.description = new_desc
                         habit.save()
                         print("Your habit has been modified! \nNow...")
@@ -124,7 +124,7 @@ def cli():
                 while try_again:
                     print("\nHere are all your current habits \n")
                     print_habits(habits_data)
-                    name = questionary.text("Which habit do you want to delete?").ask()
+                    name = questionary.text("Which habit do you want to delete?\n").ask()
                     habit = Habit(db, user.id, name)
                     habit.identify()
                     if habit.id is None:
@@ -143,7 +143,7 @@ def cli():
 
             elif choice == "List":
                 choice = questionary.select(
-                    "Do you want to list habits or a habit's logs?",
+                    "Do you want to list habits or a habit's logs?\n",
                     choices=["Habits", "A habit's logs"]
                 ).ask()
                 if choice == "Habits":
@@ -155,7 +155,7 @@ def cli():
                         print("\nHere are all your current habits:\n")
                         print_habits(habits_data)
                     else:
-                        reg = questionary.text("What regularity? (in days, e.g. 1 for daily)",
+                        reg = questionary.text("What regularity? (in days, e.g. 1 for daily)\n",
 											   validate=lambda text: True if len(
 												   text) > 0 and text.isnumeric() else "Please enter a value"
 											   ).ask()
@@ -166,7 +166,7 @@ def cli():
                     while try_again:
                         print("\nHere are all your current habits:\n")
                         print_habits(habits_data)
-                        name = questionary.text("Which habit's logs do you want to view?").ask()
+                        name = questionary.text("Which habit's logs do you want to view?\n").ask()
                         habit = Habit(db, user.id, name)
                         habit.identify()
                         if habit.id is None:
@@ -176,9 +176,9 @@ def cli():
                             print_logs(habit.logs_data)
                             try_again = False
 
-            elif choice == "Analyse":
+            elif choice == "Analyze":
                 choice = questionary.select(
-                    "From which habits do you want to analyse the longest streak?",
+                    "From which habits do you want to analyze the longest streak?",
                     choices=["All", "With a specific regularity", "A specific habit"]
                 ).ask()
                 if choice == "All":
@@ -186,7 +186,7 @@ def cli():
                     print_longest_streak_of_streaks(
                         habits_data, db, "with a streak of:")
                 elif choice == "With a specific regularity":
-                    reg = questionary.text("What regularity? (in days, e.g. 1 for daily)",
+                    reg = questionary.text("What regularity? (in days, e.g. 1 for daily)\n",
 										   validate=lambda text: True if len(
 											   text) > 0 and text.isnumeric() else "Please enter a value"
 										   ).ask()
@@ -198,7 +198,7 @@ def cli():
                     while try_again:
                         print("\nHere are all your current habits:")
                         print_habits(habits_data)
-                        name = questionary.text("Which habit do you want to analyse?").ask()
+                        name = questionary.text("Which habit do you want to analyze?\n").ask()
                         habit = Habit(db, user.id, name)
                         habit.identify()
                         if habit.id is None:
