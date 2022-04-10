@@ -1,13 +1,14 @@
-# Habitoro
+# Habitoro ![](./assets/habitoro_small.png)
 
 Habitoro is a command-line habit tracker written in Python and SQLite.
 
 ## Summary
 
-Habitoro is a command-line habit tracker where a user can create/login to an account and
-track habits of their choice. Users can also choose how regularly they want to try to track 
-their habit, give habits descriptions, and determine their longest streak of successfully 
-logged habits.
+Habitoro is a command-line habit tracker where a user can create an account and
+track, log, and assess their habits.
+
+Users can choose how regularly they want to try to track their habit, give habits descriptions, 
+and examine their most successfully tracked habits.
 
 ### Languages & Technologies:
 
@@ -53,9 +54,9 @@ python main.py
 ```
 $ Hai. Welcome to Habitoro.
 $ ? What's your name?
-Helyne
+Amelia
 
-$ Welcome, Helyne.
+$ Welcome, Amelia.
 $ ? Would you like to see your habits? (Y/n)
 No
 
